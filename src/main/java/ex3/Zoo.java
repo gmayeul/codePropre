@@ -1,50 +1,90 @@
 package ex3;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Zoo {
 
+	/** nom (String) */
 	private String nom;
-	private SavaneAfricaine savaneAfricaine;
-	private ZoneCarnivore zoneCarnivore;
-	private FermeReptile fermeReptile;
-	private Aquarium aquarium;
-	
-	public Zoo(String nom){
+
+	/** listeHabitats (List<HabitatAnimal>) */
+	private List<HabitatAnimal> listeHabitats;
+
+	/**
+	 * Constructeur
+	 * 
+	 * @param nom
+	 */
+	public Zoo(String nom) {
 		this.nom = nom;
-	}
-	
-	public void addAnimal(String nomAnimal, String typeAnimal, String comportement){
-		if (typeAnimal.equals("MAMMIFERE") && comportement.equals("CARNIVORE")){
-			zoneCarnivore.addAnimal(typeAnimal, nomAnimal, comportement);
-		}
-		else if (typeAnimal.equals("MAMMIFERE") && comportement.equals("HERBIVORE")){
-			savaneAfricaine.addAnimal(typeAnimal, nomAnimal, comportement);
-		}
-		else if (typeAnimal.equals("REPTILE")){
-			fermeReptile.addAnimal(typeAnimal, nomAnimal, comportement);
-		}
-		else if (typeAnimal.equals("POISSON")){
-			aquarium.addAnimal(typeAnimal, nomAnimal, comportement);
-		}
-	}
-	
-	public void afficherListeAnimaux(){
-		savaneAfricaine.afficherListeAnimaux();
-		zoneCarnivore.afficherListeAnimaux();
-		fermeReptile.afficherListeAnimaux();
-		aquarium.afficherListeAnimaux();
+		this.listeHabitats = new ArrayList<HabitatAnimal>();
 	}
 
-	/** Getter for nom
+	/**
+	 * Affiche la liste des animaux du zoo, habitat par habitat
+	 */
+	public void afficherListeAnimaux() {
+		for (HabitatAnimal habitat : listeHabitats) {
+			System.out.println(habitat.getType().getNom() + " :");
+			habitat.afficherListeAnimaux();
+			System.out.println();
+		}
+	}
+
+	/**
+	 * Ajoute un animal dans le zoo, dans un habitat adapté (on considère que
+	 * chaque habitat à un type unique)
+	 * 
+	 * @param animal
+	 */
+	public void ajouterAnimal(Animal animal) {
+		for (HabitatAnimal habitat : listeHabitats) {
+			if (habitat.getType().equals(animal.getHabitat()))
+				habitat.ajouterAnimal(animal);
+		}
+	}
+
+	/**
+	 * Ajoute un habitat au zoo
+	 * 
+	 * @param habitat
+	 */
+	public void ajouterHabitat(HabitatAnimal habitat) {
+		listeHabitats.add(habitat);
+	}
+
+	/**
+	 * Getter for nom
+	 * 
 	 * @return the nom
 	 */
 	public String getNom() {
 		return nom;
 	}
 
-	/** Setter
-	 * @param nom the nom to set
+	/**
+	 * Setter
+	 * 
+	 * @param nom
+	 *            the nom to set
 	 */
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+
+	/**
+	 * @return the listeHabitats
+	 */
+	public List<HabitatAnimal> getListeHabitats() {
+		return listeHabitats;
+	}
+
+	/**
+	 * @param listeHabitats
+	 *            the listeHabitats to set
+	 */
+	public void setListeHabitats(List<HabitatAnimal> listeHabitats) {
+		this.listeHabitats = listeHabitats;
 	}
 }
